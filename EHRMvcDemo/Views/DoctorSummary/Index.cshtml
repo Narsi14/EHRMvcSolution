@@ -1,0 +1,41 @@
+@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Doctor Summary";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Specialty</th>
+            <th>Total Appointments</th>
+            <th>Next Appointment</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var d in Model)
+    {
+        <tr>
+            <td>@d.FullName</td>
+            <td>@d.Specialty</td>
+            <td>@d.TotalAppointments</td>
+            <td>
+                @{
+                    var next = d.NextAppointmentDate as DateTime?;
+                    if (next.HasValue)
+                    {
+                        @next.Value.ToString("g")
+                    }
+                    else
+                    {
+                        @Html.Raw("—")
+                    }
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
